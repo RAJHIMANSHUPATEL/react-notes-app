@@ -3,6 +3,7 @@ import NotesList from './components/NotesList';
 import { nanoid } from 'nanoid';
 import Search from './components/Search';
 import Header from './components/Header';
+import AddNote from './components/AddNote';
 
 function App() {
   const [notes, setNotes] = useState(null);
@@ -47,10 +48,10 @@ function App() {
       <div className="container">
         <Header handleDarkMode={setDarkMode} />
         <Search handleSearchNote={setSearchText} />
+        <AddNote handleAddNote={addnote} />
         {notes !== null && (
           <NotesList
             notes={notes.filter((note) => note.text.toLowerCase().includes(searchText))}
-            handleAddNote={addnote}
             handleDeleteNote={deleteNote}
           />
         )}
