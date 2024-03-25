@@ -88,6 +88,7 @@ textarea:focus{
   border: none;
   background-color: rgb(233, 233, 233);
   width:fit-content;
+  width: 90%;
 }
 
 .search input:focus{
