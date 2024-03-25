@@ -8,7 +8,7 @@ function Header({ handleDarkMode }) {
     return (
         <div className='header'>
             <h1>Notes</h1>
-            <button className='save' onClick={toggleMode}>Toggle Node</button>
+            <button className='save' onClick={toggleMode}>Toggle Mode</button>
         </div>
     )
 }
