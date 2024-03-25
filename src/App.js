@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import NotesList from './components/NotesList'
+import React, { useEffect, useState } from 'react';
+import NotesList from './components/NotesList';
 import { nanoid } from 'nanoid';
 import Search from './components/Search';
 import Header from './components/Header';
 
 function App() {
-  const [notes, setNotes] = useState(null); // Set initial state to null
+  const [notes, setNotes] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const savedNotes = JSON.parse(localStorage.getItem('react-notes-app-data'))
+    const savedNotes = JSON.parse(localStorage.getItem('react-notes-app-data'));
 
     if (savedNotes) {
       setNotes(savedNotes);
     }
   }, []);
 
-  //Saving the data in localStorage
   useEffect(() => {
-    if (notes !== null) { // Check if notes is not null
-      localStorage.setItem('react-notes-app-data', JSON.stringify(notes))
+    if (notes !== null) {
+      localStorage.setItem('react-notes-app-data', JSON.stringify(notes));
+    } else {
+      localStorage.removeItem('react-notes-app-data');
     }
-  }, [notes])
+  }, [notes]);
 
   const addnote = (text) => {
     const date = new Date();
@@ -30,23 +31,23 @@ function App() {
       id: nanoid(),
       text: text,
       date: date.toLocaleDateString(),
-    }
+    };
 
-    const newNotes = [...(notes || []), newNote]; // Handle null notes state
-    setNotes(newNotes)
-  }
+    const newNotes = [...(notes || []), newNote];
+    setNotes(newNotes);
+  };
 
   const deleteNote = (id) => {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
-  }
+  };
 
   return (
-    <div className={darkMode && "dark-mode"}>
+    <div className={darkMode ? "dark-mode" : ""}>
       <div className="container">
         <Header handleDarkMode={setDarkMode} />
         <Search handleSearchNote={setSearchText} />
-        {notes !== null && ( // Render NotesList only when notes are available
+        {notes !== null && (
           <NotesList
             notes={notes.filter((note) => note.text.toLowerCase().includes(searchText))}
             handleAddNote={addnote}
@@ -55,7 +56,7 @@ function App() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
