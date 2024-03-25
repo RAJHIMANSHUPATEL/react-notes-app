@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-function AddNote({handleAddNote}) {
+function AddNote({ handleAddNote }) {
     const [noteText, setNoteText] = useState("");
+    const [exceedLimit, setExceedLimit] = useState(false);
     const characterLimit = 200;
 
     const handleChange = (e) => {
-        if (characterLimit - e.target.value.length >= 0) {
-            setNoteText(e.target.value);
+        const newText = e.target.value;
+        if (newText.length <= characterLimit) {
+            setNoteText(newText);
+            setExceedLimit(false); // Reset the exceedLimit state if within the limit
+        } else {
+            setExceedLimit(true); // Set exceedLimit state to true if the limit is exceeded
         }
-        
     }
+
     const handleSaveClick = () => {
         if (noteText.trim().length > 0) {
-            handleAddNote(noteText)
+            handleAddNote(noteText);
         }
-        setNoteText("")
+        setNoteText("");
     }
 
     return (
@@ -27,11 +32,13 @@ function AddNote({handleAddNote}) {
                 value={noteText}
             ></textarea>
             <div className="note-footer">
-                <small>{characterLimit-noteText.length} Remaining</small>
-                <button className='save'onClick={handleSaveClick} >Save</button>
+                {exceedLimit? <small style={{ color: 'red' }}>Character limit exceeded!</small>:
+                <small>{characterLimit - noteText.length} Remaining</small>
+                }
+                <button className='save' onClick={handleSaveClick}>Save</button>
             </div>
         </div>
-    )
+    );
 }
 
-export default AddNote
+export default AddNote;

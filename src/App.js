@@ -5,7 +5,13 @@ import Search from './components/Search';
 import Header from './components/Header';
 
 function App() {
-  const [notes, setNotes] = useState(null); // Set initial state to null
+  const [notes, setNotes] = useState([
+    {
+      id: 1,
+      text: "Hello",
+      date: "sdkjhgskjf"
+    }
+  ]); // Set initial state to null
   const [searchText, setSearchText] = useState('');
   const [darkMode, setDarkMode] = useState(false);
 
